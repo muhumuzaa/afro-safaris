@@ -3,18 +3,26 @@ package afro_safaris.model;
 import java.util.*;
 
 public class SafariPackage {
-	
+	private String country;
 	private String destination;
 	private int duration;
 	List<String> activities;
 	private double price;
 	
-	public SafariPackage(String destination, int duration, List<String> activities, double price) {
-		super();
+	public SafariPackage(String country, String destination, int duration, List<String> activities, double price) {
+		this.country = country;
 		this.destination = destination;
 		this.duration = duration;
 		this.activities = activities;
 		this.price = price;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	public String getDestination() {
