@@ -2,6 +2,8 @@ package afro_safaris.model;
 
 import java.util.*;
 
+
+//This class defines the structure of a Safari Package/ entity
 public class SafariPackage {
 	private String country;
 	private String destination;
@@ -57,9 +59,10 @@ public class SafariPackage {
 		this.price = price;
 	}
 	
+	//overriding toString() to get a custom print output when I print the packages
 	@Override
 	public String toString() {
-		return String.format("Destination: %s | Duration: %d days | Activities: %s | Price: $%.2f", destination, duration, String.join(", ", activities), price);
+		return String.format("\n Country: %s | Destination: %s | Duration: %d days | Activities: %s | Price: $%.2f", country, destination, duration, String.join(", ", activities), price);
 	}
 	
 	

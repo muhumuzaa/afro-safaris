@@ -6,7 +6,7 @@ import afro_safaris.model.SafariPackage;
 
 public class PremadePackages {
 	
-	public SafariPackage[] getPremadePackages() {
+	public static SafariPackage[] getPremadePackages() {
 		return new SafariPackage[] {
 				new SafariPackage("Tanzania","Serengeti & Ngorongoro", 7, Arrays.asList("Game Drive", "Cultural Visit", "Hot Air Balloon"), 4000),
 				new SafariPackage("Kenya", "Masai Mara", 4, Arrays.asList("Game Drive", "Maasai Village Visit", "Wildebeest Migration Viewing"), 2200),
