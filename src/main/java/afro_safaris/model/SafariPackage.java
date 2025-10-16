@@ -7,13 +7,11 @@ public class SafariPackage {
 	private int id;
 	private Destination destination;
 	private int duration;
-	private double price;
 	
-	public SafariPackage(int id, Destination destination, int duration, double price) {
+	public SafariPackage(int id, Destination destination, int duration) {
 		this.id = id;
 		this.destination = destination;
 		this.duration = duration;
-		this.price = price;
 	}
 	
 
@@ -38,19 +36,17 @@ public class SafariPackage {
 	}
 
 
-
-	public double getPrice() {
-		return price;
+	//I'm calculting the cost of a package. Duration already has the cost of a destination.
+	public double getPackageCost() {
+		return duration * destination.getBasePricePerDay();
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+
 	
 	//overriding toString() to get a custom print output when I print the packages. I'm appending to the destination's toString() method.
 	@Override
 	public String toString() {
-		return String.format("%s | Duration: %d days | Total cost: $%.2f", destination.toString(), duration, price*duration);
+		return String.format("%s | Duration: %d days | Total cost: $%.2f", destination.toString(), getPackageCost());
 				
 	}
 	
