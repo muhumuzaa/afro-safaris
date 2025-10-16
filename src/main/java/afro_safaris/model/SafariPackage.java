@@ -4,17 +4,22 @@ package afro_safaris.model;
 
 //This class defines the structure of a Safari Package/ entity
 public class SafariPackage {
+	private int id;
 	private Destination destination;
 	private int duration;
 	private double price;
 	
-	public SafariPackage(Destination destination, int duration, double price) {
+	public SafariPackage(int id, Destination destination, int duration, double price) {
+		this.id = id;
 		this.destination = destination;
 		this.duration = duration;
 		this.price = price;
 	}
 	
 
+	public int getId() {
+		return this.id;
+	}
 	
 	public Destination getDestination() {
 		return destination;
