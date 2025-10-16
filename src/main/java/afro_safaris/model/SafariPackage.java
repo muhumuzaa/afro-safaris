@@ -1,6 +1,5 @@
 package afro_safaris.model;
 
-import java.util.*;
 
 
 //This class defines the structure of a Safari Package/ entity
@@ -43,12 +42,11 @@ public class SafariPackage {
 		this.price = price;
 	}
 	
-	//overriding toString() to get a custom print output when I print the packages
+	//overriding toString() to get a custom print output when I print the packages. I'm appending to the destination's toString() method.
 	@Override
 	public String toString() {
-		return String.format("\n Destination: %s | Duration: %d days | Price: $%.2f",  destination, duration, price);
+		return String.format("%s | Duration: %d days | Total cost: $%.2f", destination.toString(), duration, price*duration);
+				
 	}
 	
-	
-
 }
