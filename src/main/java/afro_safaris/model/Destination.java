@@ -6,9 +6,9 @@ import java.util.Map;
 public class Destination {
 	private String title;
 	private String summary;
-	private Double basePricePerDay;
+	private double basePricePerDay;
 	
-	public Destination(String title, String summary, Double basePricePerDay) {
+	public Destination(String title, String summary, double basePricePerDay) {
 		this.title = title;
 		this.summary = summary;
 		this.basePricePerDay = basePricePerDay;
@@ -22,7 +22,7 @@ public class Destination {
 		return this.summary;
 	}
 	
-	public Double getBasePricePerDay() {
+	public double getBasePricePerDay() {
 		return this.basePricePerDay;
 	}
 }

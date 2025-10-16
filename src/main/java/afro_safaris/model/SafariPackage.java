@@ -5,11 +5,11 @@ import java.util.*;
 
 //This class defines the structure of a Safari Package/ entity
 public class SafariPackage {
-	private String destination;
+	private Destination destination;
 	private int duration;
 	private double price;
 	
-	public SafariPackage(String destination, int duration, double price) {
+	public SafariPackage(Destination destination, int duration, double price) {
 		this.destination = destination;
 		this.duration = duration;
 		this.price = price;
@@ -17,13 +17,13 @@ public class SafariPackage {
 	
 
 	
-	public String getDestination() {
+	public Destination getDestination() {
 		return destination;
 	}
 
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
+//	public void setDestination(String destination) {
+//		this.destination = destination;
+//	}
 
 	public int getDuration() {
 		return duration;
