@@ -36,12 +36,13 @@ public class App {
 			
 			//This increments on top of the size of the pre-made packages. This is dynamic incase the PremadePackageService increase or reduces packages or generates them randomly
 			int customizeOption = premadePackages.size()+1;
+			
 			System.out.println(customizeOption+ ". Customize your own safari Package.");
 			System.out.println("0. Exit");
 			
 			//Get user input/choice
 			System.out.print("\nEnter your choice: ");
-			System.out.flush();
+			
 			int userChoice = scanner.nextInt();
 			scanner.nextLine();
 			
@@ -53,8 +54,12 @@ public class App {
 			if(userChoice >= 1 && userChoice <= premadePackages.size()) {
 				//I'm using -1 because when I'm displaying the pre-made packages, I put (i+1) since Lists start from 0 index. if user inputs 2, that choice refers to package at index 1 in the premadePackages List 
 				selected = premadePackages.get(userChoice -1 );
+				
+				//if user wants to create custom package
 			} else if(userChoice == customizeOption) {
 				selected = CustomPackageService.createPackage(scanner);
+				
+				//user chooses to exit
 			} else if (userChoice ==0) {
 				System.out.println("Thank you for visiting Afro Safaris! Goodbye! ");
 				running = false; 
@@ -71,7 +76,7 @@ public class App {
 			
 			//Ask number of people booking the package and offer discounted cost if more than 1
 			System.out.println("\nGet 10% Discount with every extra person! Please note: packages have a maximum limit of 10 people");
-			System.out.print("How many people are booking this Safari? ");
+			System.out.print("\nHow many people are booking this Safari? ");
 			
 			int numOfPeople = scanner.nextInt(); //throw custom exception if user puts 0 or above 10
 			scanner.nextLine();

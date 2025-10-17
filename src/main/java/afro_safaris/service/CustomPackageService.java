@@ -11,12 +11,12 @@ public class CustomPackageService {
 	public static SafariPackage createPackage(Scanner scanner){
 		
 		
-		System.out.println("---------------  Customize and book your dream Safari package   ---------------------------");
+		System.out.println("\n---------------  Customize and book your dream Safari package   ---------------------------\n");
 		List<Destination> destinations = Destinations.getDestinations();
 		
 		
 		//Display destinations a user can choose from
-		System.out.println("Choose a destination: (1 - "+ destinations.size() + " )");
+		System.out.println("Choose a destination: (1 - "+ destinations.size() + " )\n");
 		
 		for(int i =0; i <destinations.size(); i++) {
 			Destination dest = destinations.get(i);
@@ -26,16 +26,14 @@ public class CustomPackageService {
 		}
 		
 		//Ask user to choose a destination
-		int userChoice = readIntInput(scanner, 1, destinations.size(), "\nEnter your choice: ");
-		userChoice = scanner.nextInt();
-		scanner.nextLine();
+		int userChoice = readIntInput(scanner, 1, destinations.size(), "\nEnter your Destination choice: ");
+		
 		
 		Destination chosenDestination = destinations.get(userChoice -1); // -1 Because the displayed destinations start from 1 but the destinations List starts from index 0;
 		
 		//Ask user to add number of days they want to book a package for
-		int numOfDays = readIntInput(scanner, 2, 10, "\nEnter number of days you want to book: You can book between 2- 10 days: ");
-		numOfDays = scanner.nextInt();
-		scanner.nextLine();
+		int numOfDays = readIntInput(scanner, 2, 10, "\nEnter number of days you want to book for: You can book between 2- 10 days: ");
+
 		
 		//Creating the custom SafariPackage object depending on the user's choices. And displaying it for the user
 		SafariPackage createdCustomePackage = new SafariPackage(chosenDestination, numOfDays);
@@ -46,6 +44,9 @@ public class CustomPackageService {
 		
 	}
 	
+	/*This function prevents app from crushing due to exceptions like IndexOutOfBoundsException(user putting 10 yet the list has only 6 destinations) or 
+	 * InputMismatchException (string instead of int). 
+	 */
 	public static int readIntInput(Scanner scanner, int min, int max, String prompt) {
 		
 		int value;
@@ -53,9 +54,9 @@ public class CustomPackageService {
 			System.out.println(prompt); //show user a prompt
 			
 			if(scanner.hasNextInt()) {
-				value = scanner.nextInt(); //check if user input in int
+				value = scanner.nextInt(); //check if user input in int. prevents app crash if user enters string or other data types; 
 				scanner.nextLine();
-				if(value >=min && value <=max) {
+				if(value >=min && value <=max) { //check user input is between the limits required. e.g 
 					return value;
 				}else {
 					System.out.println("Please enter a number between "+min +" and "+max+".");
