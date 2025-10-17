@@ -25,18 +25,45 @@ public class CustomPackageService {
 			System.out.println("    Rate: $"+dest.getBasePricePerDay() +" /day\n");
 		}
 		
-		
-		int choice = scanner.nextInt();
-		scanner.nextLine();
-		Destination chosenDest = destinations.get(choice -1);
-		
-		System.out.println("Choose the duration of your package. (2 - 7 days)");
-		int days = scanner.nextInt();
+		//Ask user to choose a destination
+		int userChoice = readIntInput(scanner, 1, destinations.size(), "\nEnter your choice: ");
+		userChoice = scanner.nextInt();
 		scanner.nextLine();
 		
-		//create a new customPackage
-		SafariPackage customPackage = new SafariPackage(chosenDest, days);
-		return customPackage;
+		Destination chosenDestination = destinations.get(userChoice -1); // -1 Because the displayed destinations start from 1 but the destinations List starts from index 0;
+		
+		//Ask user to add number of days they want to book a package for
+		int numOfDays = readIntInput(scanner, 2, 10, "\nEnter number of days you want to book: You can book between 2- 10 days: ");
+		numOfDays = scanner.nextInt();
+		scanner.nextLine();
+		
+		//Creating the custom SafariPackage object depending on the user's choices. And displaying it for the user
+		SafariPackage createdCustomePackage = new SafariPackage(chosenDestination, numOfDays);
+		System.out.println("\n Your custom Safari Package has been created.");
+		
+		
+		return createdCustomePackage ;
+		
+	}
+	
+	public static int readIntInput(Scanner scanner, int min, int max, String prompt) {
+		
+		int value;
+		while(true) {
+			System.out.println(prompt); //show user a prompt
+			
+			if(scanner.hasNextInt()) {
+				value = scanner.nextInt(); //check if user input in int
+				scanner.nextLine();
+				if(value >=min && value <=max) {
+					return value;
+				}else {
+					System.out.println("Please enter a number between "+min +" and "+max+".");
+				}
+			}else {
+				System.out.println("Invalid input! Please enter a number");
+			}
+		}
 	}
 
 }
