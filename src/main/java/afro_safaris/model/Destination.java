@@ -29,6 +29,6 @@ public class Destination {
 	@Override
 	public String toString() {
 		
-		return title + " -- "+summary ; 
+		return title + " - "+summary ; 
 	}
 }

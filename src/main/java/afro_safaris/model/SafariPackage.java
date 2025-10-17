@@ -4,12 +4,14 @@ package afro_safaris.model;
 
 //This class defines the structure of a Safari Package/ entity
 public class SafariPackage {
+	private static int counter = 1; //globally increments the id with each object created
+	
 	private int id;
 	private Destination destination;
 	private int duration;
 	
-	public SafariPackage(int id, Destination destination, int duration) {
-		this.id = id;
+	public SafariPackage( Destination destination, int duration) {
+		this.id = counter++;
 		this.destination = destination;
 		this.duration = duration;
 	}
@@ -46,7 +48,7 @@ public class SafariPackage {
 	//overriding toString() to get a custom print output when I print the packages. I'm appending to the destination's toString() method.
 	@Override
 	public String toString() {
-		return String.format("%s | Duration: %d days | Total cost: $%.2f", destination.toString(), getPackageCost());
+		return String.format("%s | Duration: %d days | Total cost/person: $%.2f",  destination.toString(), duration, getPackageCost());
 				
 	}
 	
