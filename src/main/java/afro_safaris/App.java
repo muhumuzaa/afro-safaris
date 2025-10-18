@@ -12,7 +12,6 @@ import afro_safaris.util.PackageCost;
 
 public class App {
 
-	static List<SafariPackage> premadePackakges = PremadePackageService.createPremadePackages();
 
 	public static void main(String[] args) {
 		
@@ -75,12 +74,29 @@ public class App {
 			System.out.println(selected); //display the selected package,
 			
 			//Ask number of people booking the package and offer discounted cost if more than 1
-			System.out.println("\nGet 10% Discount with every extra person! Please note: packages have a maximum limit of 10 people");
-			System.out.print("\nHow many people are booking this Safari? ");
+			System.out.print("\nHow many people are booking this Safari?: ");
+			System.out.println("\nEvery extra person gets 10% discount! Please note: packages have a maximum limit of 10 people.");
 			
-			int numOfPeople = scanner.nextInt(); //throw custom exception if user puts 0 or above 10
-			scanner.nextLine();
-			System.out.flush();
+			
+			int numOfPeople = 0; //throw custom exception if user puts 0 or above 10
+			while(true) {
+				if(scanner.hasNextInt()) {
+					numOfPeople = scanner.nextInt();
+					if(numOfPeople >=1 && numOfPeople <= 10) {
+						scanner.nextLine();
+						break;
+					}else {
+						System.out.println("Invalid number. Please enter a value between 1 and 10.");
+			            System.out.print("\nHow many people are booking this Safari? ");
+			            scanner.nextLine(); // Consume the rest of the line
+					}
+				}else {
+					System.out.println("That's not a valid number. Please try again.");
+			        System.out.print("\nHow many people are booking this Safari? ");
+			        scanner.next(); //consumes invalid input
+				}
+			}
+			
 			
 			
 			//calculate cost depending on number of people

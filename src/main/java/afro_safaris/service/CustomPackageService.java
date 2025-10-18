@@ -59,10 +59,11 @@ public class CustomPackageService {
 				if(value >=min && value <=max) { //check user input is between the limits required. e.g 
 					return value;
 				}else {
-					System.out.println("Please enter a number between "+min +" and "+max+".");
+					throws new InvalidDaysException("Please enter a number between "+min +" and "+max+".");
 				}
 			}else {
 				System.out.println("Invalid input! Please enter a number");
+				scanner.nextLine();
 			}
 		}
 	}
