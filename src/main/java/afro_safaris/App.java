@@ -37,10 +37,11 @@ public class App {
 			
 			//This increments on top of the size of the pre-made packages. This is dynamic incase the PremadePackageService increase or reduces packages or generates them randomly
 			int customizeOption = premadePackages.size()+1;
+			int viewBookingsOption = customizeOption + 1; //To show user all their bookings
 			
 			System.out.println(customizeOption+ ". Customize your own safari Package.");
+			System.out.println(viewBookingsOption+ ". View my bookings");
 			System.out.println("0. Exit");
-			
 			
 			
 			
@@ -86,14 +87,25 @@ public class App {
 					System.err.println("\n----Error creating your custom package---");
 					System.err.println("Error is: "+e.getMessage());
 					
+					
 					//Logging error for better user experience
 					if(e.getErrorType() == InvalidInputException.ErrorType.FORMART_ERROR) {
 						System.err.println("Action: Input must be a whole number.");
 					}else if(e.getErrorType() == InvalidInputException.ErrorType.RANGE_ERROR) {
 						System.err.println("Action: Input was outside the allowed boundaries.");
 					}
-				}
-				}
+				}}
+				
+				}else if(userChoice == viewBookingsOption) {
+				    if (bookedPackages.isEmpty()) {
+				        System.out.println("\nNo bookings found yet.");
+				    } else {
+				        System.out.println("\n---- Your Bookings ----");
+				        for (Map.Entry<Integer, SafariPackage> entry : bookedPackages.entrySet()) {
+				            System.out.printf("Booking ID: %d | %s%n", entry.getKey(), entry.getValue());
+				        }
+				    }
+				    continue; // Go back to main menu
 				
 				
 				//user chooses to exit
