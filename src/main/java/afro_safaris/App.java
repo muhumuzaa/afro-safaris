@@ -17,18 +17,20 @@ public class App {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		//tracks number of packages booked with their ids
+		//tracks number of packages booked with their ids. For fast look up by ids. Unlike Lists, they store a map of key, value which is for uniquely referencing bookings
 		Map<Integer, SafariPackage> bookedPackages = new HashMap<>();
 		
 		//Start of the app menu
 		System.out.println("\n\nWelcome to Afro Safaris !!");
 		System.out.println("Book from our Pre-made packages or Customize your own. \n");
+		System.out.println("Luxury packages include Airport pickup and drop off. They cost 20% more.\n");
 	
 		boolean running = true;
 		
 		while(running) {
 			
 			//Display a menu of pre-made packages + option to create custom ones + option to exit
+			//I'm using List because lists are they are flexible. Extra packages can be added. Even duplicates can be added e.g a user can book a package more than once.- maybe booking for a friend.
 			List<SafariPackage> premadePackages = PremadePackageService.createPremadePackages();
 			
 			for(int i = 0; i < premadePackages.size(); i++) {
@@ -96,13 +98,14 @@ public class App {
 					}
 				}}
 				
+				//Show user their bookings
 				}else if(userChoice == viewBookingsOption) {
 				    if (bookedPackages.isEmpty()) {
-				        System.out.println("\nNo bookings found yet.");
+				        System.out.println("\nNo bookings found yet. Make a choice in the menu to create bookings.\n");
 				    } else {
 				        System.out.println("\n---- Your Bookings ----");
 				        for (Map.Entry<Integer, SafariPackage> entry : bookedPackages.entrySet()) {
-				            System.out.printf("Booking ID: %d | %s%n", entry.getKey(), entry.getValue());
+				            System.out.printf("Booking ID: %d | %s%n%n", entry.getKey(), entry.getValue());
 				        }
 				    }
 				    continue; // Go back to main menu
@@ -125,7 +128,7 @@ public class App {
 			//Ask number of people booking the package and offer discounted cost if more than 1
 			System.out.println("\n----  DISCOUNT ON GROUP BOOKINGS!!! Every extra person gets 10% discount! ----------");
 			System.out.println("Please note: packages have a maximum limit of 10 people.");
-			System.out.print("\nHow many people are booking this Safari?: ");
+//			System.out.print("\nHow many people are booking this Safari?: ");
 			
 			
 			int numOfPeople = 0; //throw custom exception if user puts 0 or above 10

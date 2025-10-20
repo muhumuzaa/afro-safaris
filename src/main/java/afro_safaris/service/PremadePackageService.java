@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import afro_safaris.model.Destination;
+import afro_safaris.model.LuxurySafariPackkage;
 import afro_safaris.model.SafariPackage;
 
 public class PremadePackageService {
@@ -15,7 +16,7 @@ public class PremadePackageService {
 		
 		List<SafariPackage> packages = new ArrayList<>(); //creating an ArrayList of packages that I'm going to populating with 3 premade packages
 		
-		for(int i=0; i <Math.min(3, destinations.size()); i++) {
+		for(int i=0; i <Math.min(4, destinations.size()); i++) {
 			
 			int randomDay = (int)(Math.random()*8) +3; //Math.random creates doubles of 0 -0.99... I cast it to int and add 3. so the range of days is always 3 to 10 days
 			/*Math.min(3, destinations.size() prevents IndexOutOfBoundsException - since developers are advised not to handle unchecked exceptions but rather 
@@ -23,7 +24,15 @@ public class PremadePackageService {
 //			 * It will always be within the range of the total destinations thus preventing IndexOutOfBoundsException.
 //			 
 //			 */
-			packages.add(new SafariPackage(destinations.get(i), randomDay)); //Creating n ~3 packages of SafariPackage type
+			
+			if(i%2 ==0) {
+				//every 2nd package is a luxury package
+				packages.add(new LuxurySafariPackkage(destinations.get(i), randomDay));
+			}else {
+			
+				//its a standard package
+			packages.add(new SafariPackage(destinations.get(i), randomDay)); 
+			}
 		}
 		return packages; 
 	}
