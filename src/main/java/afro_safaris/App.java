@@ -98,16 +98,13 @@ public class App {
 				System.out.println("Thank you for visiting Afro Safaris! Goodbye! ");
 				running = false; 
 				continue; //skip rest of the loop
-			} else {
-				System.out.println("Invalid choice. Enter numbers between 0 - "+customizeOption);
-				continue; //show menu again
-			}
+			} 
 			
 			
 			//Confirm and Display details of user's booking details
 			System.out.println("\nYou have selected: \n");
 			System.out.println(selected); //display the selected package,
-			System.out.println("\nComplete the step below tocomplete your boooking. \n");
+			System.out.println("\nComplete the step below to complete your boooking. \n");
 			
 			//Ask number of people booking the package and offer discounted cost if more than 1
 			
@@ -118,29 +115,8 @@ public class App {
 			
 			int numOfPeople = 0; //throw custom exception if user puts 0 or above 10
 			while(true) {
-				
-//				try {
-//					if(scanner.hasNextInt()) {
-//						numOfPeople = scanner.nextInt();
-//						if(numOfPeople >=1 && numOfPeople <= 10) {
-//							scanner.nextLine();
-//							break;
-//						}else {
-//							throw new InvalidInputException( "Invalid number. Please enter a value between 1 and 10.", InvalidInputException.ErrorType.RANGE_ERROR);
-//						}
-//					}else {
-//						
-//				        scanner.next(); //consumes invalid input
-//				        scanner.nextLine();
-//				        throw new InvalidInputException( "That's not a valid number. Please try again.", InvalidInputException.ErrorType.FORMART_ERROR);
-//					}
-//				}catch(InvalidInputException e) {
-//					System.out.println(e.getMessage());
-//			        System.out.print("\nHow many people are booking this Safari? ");
-//				}
-				
-				
-				// -------------Since I have a read input method in UserInputController. I'm using it instead of manually like above
+						
+				// -------------Since I have a read input method in UserInputController. 
 				
 				try {
 			        numOfPeople = UserInputController.readIntInput(
