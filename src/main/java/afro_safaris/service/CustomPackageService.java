@@ -2,8 +2,7 @@ package afro_safaris.service;
 
 import java.util.*;
 
-import afro_safaris.exception.BadInputException;
-import afro_safaris.exception.InvalidDaysException;
+import afro_safaris.exception.InvalidInputException;
 import afro_safaris.model.Destination;
 import afro_safaris.model.SafariPackage;
 
@@ -60,11 +59,11 @@ public class CustomPackageService {
 				if(value >=min && value <=max) { //check user input is between the limits required. e.g 
 					return value;
 				}else {
-					throw new InvalidDaysException("Please enter a number between "+min +" and "+max+".");
+					throw new InvalidInputException("Please enter a number between "+min +" and "+max+".", InvalidInputException.ErrorType.RANGE_ERROR); //throws Range Error
 				}
 			}else {
-				scanner.nextLine();// consumes the invalid input
-				throw new BadInputException("Invalid input! Please enter a number");
+				scanner.nextLine();// consumes the invalid input and throws Format error
+				throw new InvalidInputException("Invalid input! Please enter a number", InvalidInputException.ErrorType.FORMART_ERROR);
 				
 			}
 		}

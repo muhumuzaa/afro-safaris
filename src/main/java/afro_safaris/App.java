@@ -2,11 +2,9 @@ package afro_safaris;
 
 import java.util.*;
 
-
-import afro_safaris.model.Destination;
+import afro_safaris.exception.InvalidInputException;
 import afro_safaris.model.SafariPackage;
 import afro_safaris.service.CustomPackageService;
-import afro_safaris.service.Destinations;
 import afro_safaris.service.PremadePackageService;
 import afro_safaris.util.PackageCost;
 
@@ -19,6 +17,7 @@ public class App {
 		Scanner scanner = new Scanner(System.in);
 		
 		
+		//Start of the app menu
 		System.out.println("\n\nWelcome to Afro Safaris !!");
 		System.out.println("Book from our Pre-made packages or Customize your own. \n");
 	
@@ -39,11 +38,26 @@ public class App {
 			System.out.println(customizeOption+ ". Customize your own safari Package.");
 			System.out.println("0. Exit");
 			
+			
+			
+			
 			//Get user input/choice
 			System.out.print("\nEnter your choice: ");
 			
-			int userChoice = scanner.nextInt();
-			scanner.nextLine();
+			
+			int userChoice = -1; //declared outside the try-catch block so userChoice is accessible outside try-catch
+			
+			try {
+				userChoice = scanner.nextInt();
+				scanner.nextLine();
+			}catch(InputMismatchException e) {
+				System.out.println("Invalid choice. Please enter a number.");
+				scanner.nextLine(); // consume bad input
+				continue;
+			}
+			
+			
+			
 			
 			
 			
@@ -51,12 +65,32 @@ public class App {
 			SafariPackage selected = null;
 			
 			if(userChoice >= 1 && userChoice <= premadePackages.size()) {
+				
 				//I'm using -1 because when I'm displaying the pre-made packages, I put (i+1) since Lists start from 0 index. if user inputs 2, that choice refers to package at index 1 in the premadePackages List 
 				selected = premadePackages.get(userChoice -1 );
 				
 				//if user wants to create custom package
 			} else if(userChoice == customizeOption) {
-				selected = CustomPackageService.createPackage(scanner);
+				
+				//try-catch to handle runtime exceptions using my InvalidInputException when creating custom packages
+				while (true) {
+				try {
+					selected = CustomPackageService.createPackage(scanner);
+					break; //packge created, exit this loop
+					
+				}catch(InvalidInputException e ) {
+					System.err.println("\n----Error creating your custom package---");
+					System.err.println("Error is: "+e.getMessage());
+					
+					//Logging error for better user experience
+					if(e.getErrorType() == InvalidInputException.ErrorType.FORMART_ERROR) {
+						System.err.println("Action: Input must be a whole number.");
+					}else if(e.getErrorType() == InvalidInputException.ErrorType.RANGE_ERROR) {
+						System.err.println("Action: Input was outside the allowed boundaries.");
+					}
+				}
+				}
+				
 				
 				//user chooses to exit
 			} else if (userChoice ==0) {
@@ -70,31 +104,40 @@ public class App {
 			
 			
 			//Confirm and Display details of user's booking details
-			System.out.println("\nHere are your booking details: ");
+			System.out.println("\nYou have selected: \n");
 			System.out.println(selected); //display the selected package,
+			System.out.println("\nComplete the step below tocomplete your boooking. \n");
 			
 			//Ask number of people booking the package and offer discounted cost if more than 1
+			
+			System.out.println("\n----  DISCOUNT ON GROUP BOOKINGS!!! Every extra person gets 10% discount! ----------");
+			System.out.println("Please note: packages have a maximum limit of 10 people.");
 			System.out.print("\nHow many people are booking this Safari?: ");
-			System.out.println("\nEvery extra person gets 10% discount! Please note: packages have a maximum limit of 10 people.");
 			
 			
 			int numOfPeople = 0; //throw custom exception if user puts 0 or above 10
 			while(true) {
-				if(scanner.hasNextInt()) {
-					numOfPeople = scanner.nextInt();
-					if(numOfPeople >=1 && numOfPeople <= 10) {
-						scanner.nextLine();
-						break;
+				
+				try {
+					if(scanner.hasNextInt()) {
+						numOfPeople = scanner.nextInt();
+						if(numOfPeople >=1 && numOfPeople <= 10) {
+							scanner.nextLine();
+							break;
+						}else {
+							throw new InvalidInputException( "Invalid number. Please enter a value between 1 and 10.", InvalidInputException.ErrorType.RANGE_ERROR);
+						}
 					}else {
-						System.out.println("Invalid number. Please enter a value between 1 and 10.");
-			            System.out.print("\nHow many people are booking this Safari? ");
-			            scanner.nextLine(); // Consume the rest of the line
+						
+				        scanner.next(); //consumes invalid input
+				        scanner.nextLine();
+				        throw new InvalidInputException( "That's not a valid number. Please try again.", InvalidInputException.ErrorType.FORMART_ERROR);
 					}
-				}else {
-					System.out.println("That's not a valid number. Please try again.");
+				}catch(InvalidInputException e) {
+					System.out.println(e.getMessage());
 			        System.out.print("\nHow many people are booking this Safari? ");
-			        scanner.next(); //consumes invalid input
 				}
+				
 			}
 			
 			
@@ -105,12 +148,27 @@ public class App {
 			
 			
 			//TODO custom exception to handle user putting invalid input or wrong no. of people
-			if(numOfPeople ==1) {
-				System.out.printf("Total Booking cost for 1 person: $%.2f%n ", packageCost);
-			}else {
-				double savings = numOfPeople*selected.getPackageCost() - packageCost;
-				System.out.printf("Total Booking cost for %d people: $%.2f ", numOfPeople, packageCost );
-				System.out.printf("You have saved $%.2f", savings);
+			String separator = "\n==========================================================\n";
+
+			if (numOfPeople == 1) {
+			    // Print Separator ABOVE the message
+			    System.out.println(separator);
+			    System.out.println("\n	Thank you!! Your package booking has successfully completed. Below are the details:");
+			    System.out.printf("		You have paid: $%.2f for 1 person%n", packageCost);
+			    System.out.printf("		Package booked is: " + selected + "\n");
+			    // Print Separator BELOW the details
+			    System.out.println(separator);
+			} else {
+			    // Note: 'selected' must be an object with a getPackageCost() method
+			    double savings = numOfPeople * selected.getPackageCost() - packageCost;
+			    // Print Separator ABOVE the message
+			    System.out.println(separator);
+			    System.out.println("	Thank you!! Your package booking has successfully completed. Below are the details:");
+			    System.out.printf("		You have paid: $%.2f for %d people %n", packageCost, numOfPeople);
+			    System.out.printf("		You have saved: $%.2f.%n", savings);
+			    System.out.printf("		Package booked is: " + selected + "\n"); // Changed %n to \n for consistency
+			    // Print Separator BELOW the details
+			    System.out.println(separator);
 			}
 			
 
