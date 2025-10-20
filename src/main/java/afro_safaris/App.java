@@ -7,6 +7,7 @@ import afro_safaris.model.SafariPackage;
 import afro_safaris.service.CustomPackageService;
 import afro_safaris.service.PremadePackageService;
 import afro_safaris.util.PackageCost;
+import afro_safaris.util.UserInputController;
 
 public class App {
 
@@ -118,25 +119,39 @@ public class App {
 			int numOfPeople = 0; //throw custom exception if user puts 0 or above 10
 			while(true) {
 				
+//				try {
+//					if(scanner.hasNextInt()) {
+//						numOfPeople = scanner.nextInt();
+//						if(numOfPeople >=1 && numOfPeople <= 10) {
+//							scanner.nextLine();
+//							break;
+//						}else {
+//							throw new InvalidInputException( "Invalid number. Please enter a value between 1 and 10.", InvalidInputException.ErrorType.RANGE_ERROR);
+//						}
+//					}else {
+//						
+//				        scanner.next(); //consumes invalid input
+//				        scanner.nextLine();
+//				        throw new InvalidInputException( "That's not a valid number. Please try again.", InvalidInputException.ErrorType.FORMART_ERROR);
+//					}
+//				}catch(InvalidInputException e) {
+//					System.out.println(e.getMessage());
+//			        System.out.print("\nHow many people are booking this Safari? ");
+//				}
+				
+				
+				// -------------Since I have a read input method in UserInputController. I'm using it instead of manually like above
+				
 				try {
-					if(scanner.hasNextInt()) {
-						numOfPeople = scanner.nextInt();
-						if(numOfPeople >=1 && numOfPeople <= 10) {
-							scanner.nextLine();
-							break;
-						}else {
-							throw new InvalidInputException( "Invalid number. Please enter a value between 1 and 10.", InvalidInputException.ErrorType.RANGE_ERROR);
-						}
-					}else {
-						
-				        scanner.next(); //consumes invalid input
-				        scanner.nextLine();
-				        throw new InvalidInputException( "That's not a valid number. Please try again.", InvalidInputException.ErrorType.FORMART_ERROR);
-					}
-				}catch(InvalidInputException e) {
-					System.out.println(e.getMessage());
-			        System.out.print("\nHow many people are booking this Safari? ");
-				}
+			        numOfPeople = UserInputController.readIntInput(
+			            scanner, 1, 10,
+			            "\nHow many people are booking this Safari? (1–10): "
+			        );
+			        break; // valid input, exit loop
+			    } catch (InvalidInputException e) {
+			        System.out.println(e.getMessage());
+			        System.out.print("Please try again.\n");
+			    }
 				
 			}
 			

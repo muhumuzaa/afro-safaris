@@ -5,6 +5,7 @@ import java.util.*;
 import afro_safaris.exception.InvalidInputException;
 import afro_safaris.model.Destination;
 import afro_safaris.model.SafariPackage;
+import afro_safaris.util.UserInputController;
 
 public class CustomPackageService {
 	
@@ -26,13 +27,13 @@ public class CustomPackageService {
 		}
 		
 		//Ask user to choose a destination
-		int userChoice = readIntInput(scanner, 1, destinations.size(), "\nEnter your Destination choice: ");
+		int userChoice = UserInputController.readIntInput(scanner, 1, destinations.size(), "\nEnter your Destination choice: ");
 		
 		
 		Destination chosenDestination = destinations.get(userChoice -1); // -1 Because the displayed destinations start from 1 but the destinations List starts from index 0;
 		
 		//Ask user to add number of days they want to book a package for
-		int numOfDays = readIntInput(scanner, 2, 10, "\nEnter number of days you want to book for: You can book between 2- 10 days: ");
+		int numOfDays = UserInputController.readIntInput(scanner, 2, 10, "\nEnter number of days you want to book for: You can book between 2- 10 days: ");
 
 		
 		//Creating the custom SafariPackage object depending on the user's choices. And displaying it for the user
@@ -44,29 +45,5 @@ public class CustomPackageService {
 		
 	}
 	
-	/*This function prevents app from crushing due to exceptions like IndexOutOfBoundsException(user putting 10 yet the list has only 6 destinations) or 
-	 * InputMismatchException (string instead of int). 
-	 */
-	public static int readIntInput(Scanner scanner, int min, int max, String prompt) {
-		
-		int value;
-		while(true) {
-			System.out.println(prompt); //show user a prompt
-			
-			if(scanner.hasNextInt()) {
-				value = scanner.nextInt(); //check if user input in int. prevents app crash if user enters string or other data types; 
-				scanner.nextLine();
-				if(value >=min && value <=max) { //check user input is between the limits required. e.g 
-					return value;
-				}else {
-					throw new InvalidInputException("Please enter a number between "+min +" and "+max+".", InvalidInputException.ErrorType.RANGE_ERROR); //throws Range Error
-				}
-			}else {
-				scanner.nextLine();// consumes the invalid input and throws Format error
-				throw new InvalidInputException("Invalid input! Please enter a number", InvalidInputException.ErrorType.FORMART_ERROR);
-				
-			}
-		}
-	}
 
 }
