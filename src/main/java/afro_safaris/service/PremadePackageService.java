@@ -4,8 +4,9 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import afro_safaris.model.Destination;
-import afro_safaris.model.LuxurySafariPackkage;
+import afro_safaris.model.LuxurySafariPackage;
 import afro_safaris.model.SafariPackage;
+import afro_safaris.model.StandardSafariPackage;
 
 public class PremadePackageService {
 	
@@ -27,11 +28,11 @@ public class PremadePackageService {
 			
 			if(i%2 ==0) {
 				//every 2nd package is a luxury package
-				packages.add(new LuxurySafariPackkage(destinations.get(i), randomDay));
+				packages.add(new LuxurySafariPackage(destinations.get(i), randomDay));
 			}else {
 			
 				//its a standard package
-			packages.add(new SafariPackage(destinations.get(i), randomDay)); 
+			packages.add(new StandardSafariPackage(destinations.get(i), randomDay)); 
 			}
 		}
 		return packages; 

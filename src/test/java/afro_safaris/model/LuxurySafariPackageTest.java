@@ -11,7 +11,7 @@ public class LuxurySafariPackageTest {
 	@Test
 	void testLuxuryPackageExtraCost() {
 		Destination dstn = new Destination("Luxury destn", "luxury place", 200.0);
-		SafariPackage lux = new LuxurySafariPackkage(dstn, 3); //reference type is parent, object is child
+		SafariPackage lux = new LuxurySafariPackage(dstn, 3); //reference type is parent, object is child
 		
 		//normal price should be 3*200 = 600.
 		//luxury adds 20% = 720
@@ -23,7 +23,7 @@ public class LuxurySafariPackageTest {
 	@Test
 	void testLuxuryPackagePolymorphism() {
 		Destination dstn = new Destination("Luxury destn", "luxury place", 200.0);
-		SafariPackage lux = new LuxurySafariPackkage(dstn, 2);
+		SafariPackage lux = new LuxurySafariPackage(dstn, 2);
 		
 		double cost = lux.getPackageCost(); 
 		

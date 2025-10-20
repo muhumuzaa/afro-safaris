@@ -2,19 +2,19 @@ package afro_safaris.model;
 
 
 //extends the standard Safari package but overides the cost by adding 20%
-public class LuxurySafariPackkage extends SafariPackage{
+public class LuxurySafariPackage extends SafariPackage{
 
-	public LuxurySafariPackkage(Destination destination, int duration) {
+	public LuxurySafariPackage(Destination destination, int duration) {
 		super(destination, duration);
 		
 	}
 		@Override
 		public double getPackageCost() {
-			//parent's packageCost
-			double baseCost = super.getPackageCost();
+			//normal packageCost
+			double luxCost = getDuration()*getDestination().getBasePricePerDay() ;
 			
 			//add extra cost since its luxury
-			return baseCost* 1.2;
+			return luxCost* 1.2;
 		}
 		
 		@Override

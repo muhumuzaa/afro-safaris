@@ -2,8 +2,8 @@ package afro_safaris.model;
 
 
 
-//This class defines the structure of a Safari Package/ entity
-public class SafariPackage {
+//Making this the abstract of Safari packages. Then I create Standard and Luxury Safari Packages that extend this one.
+public abstract class SafariPackage {
 	private static int counter = 1; //globally increments the id with each object created
 	
 	private int id;
@@ -25,24 +25,16 @@ public class SafariPackage {
 		return destination;
 	}
 
-//	public void setDestination(String destination) {
-//		this.destination = destination;
-//	}
 
 	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
 
 
-	//I'm calculting the cost of a package. Duration already has the cost of a destination.
-	public double getPackageCost() {
-		return duration * destination.getBasePricePerDay();
-	}
-
+	//Leaving this as an abstract method. Each subclass will have its own implementation of this method
+	public abstract double getPackageCost();
+	
 
 	
 	//overriding toString() to get a custom print output when I print the packages. I'm appending to the destination's toString() method.

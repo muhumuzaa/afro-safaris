@@ -2,9 +2,10 @@ package afro_safaris.service;
 
 import java.util.*;
 
-import afro_safaris.exception.InvalidInputException;
 import afro_safaris.model.Destination;
+import afro_safaris.model.LuxurySafariPackage;
 import afro_safaris.model.SafariPackage;
+import afro_safaris.model.StandardSafariPackage;
 import afro_safaris.util.UserInputController;
 
 public class CustomPackageService {
@@ -13,6 +14,12 @@ public class CustomPackageService {
 		
 		
 		System.out.println("\n---------------  Customize and book your dream Safari package   ---------------------------\n");
+		System.out.println("\nChoose package type: ");
+		System.out.println("1. Standard Safari Package");
+		System.out.println("2. Luxury Safari Package");
+		int typeChoice = UserInputController.readIntInput(scanner, 1, 2, "Enter your choice (1 or 2): ");
+		
+		
 		List<Destination> destinations = Destinations.getDestinations();
 		
 		
@@ -37,11 +44,19 @@ public class CustomPackageService {
 
 		
 		//Creating the custom SafariPackage object depending on the user's choices. And displaying it for the user
-		SafariPackage createdCustomePackage = new SafariPackage(chosenDestination, numOfDays);
-		System.out.println("\n Your custom Safari Package has been created.");
+		
+		SafariPackage createdCustomPackage;
+		if(typeChoice == 1) {
+			createdCustomPackage = new StandardSafariPackage(chosenDestination, numOfDays);
+		    System.out.println("\nYour custom Standard Safari Package has been created.");
+		}else {
+			createdCustomPackage = new LuxurySafariPackage(chosenDestination, numOfDays);
+		    System.out.println("\nYour custom Luxury Safari Package has been created.");
+		}
+
 		
 		
-		return createdCustomePackage ;
+		return createdCustomPackage ;
 		
 	}
 	
