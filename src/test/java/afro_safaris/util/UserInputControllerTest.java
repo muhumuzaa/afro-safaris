@@ -33,7 +33,7 @@ public class UserInputControllerTest {
 //test3 - user enters mismatch input. e.g "abc"
 	@Test
 	void testReadIntputThrowsFormatError() {
-		Scanner scanner = new Scanner("15\n");
+		Scanner scanner = new Scanner("abc\n");
 		InvalidInputException ex = assertThrows(InvalidInputException.class, () -> UserInputController.readIntInput(scanner, 1, 10, "Enter a number:"));
 		assertEquals(InvalidInputException.ErrorType.FORMART_ERROR, ex.getErrorType());
 	}
