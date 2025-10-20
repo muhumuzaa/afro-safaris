@@ -17,6 +17,8 @@ public class App {
 		
 		Scanner scanner = new Scanner(System.in);
 		
+		//tracks number of packages booked with their ids
+		Map<Integer, SafariPackage> bookedPackages = new HashMap<>();
 		
 		//Start of the app menu
 		System.out.println("\n\nWelcome to Afro Safaris !!");
@@ -62,9 +64,10 @@ public class App {
 			
 			
 			
-			//logic depending on user input
-			SafariPackage selected = null;
 			
+			SafariPackage selected = null; //Initially, no SafariPackages have been created
+			
+			//logic depending on user input
 			if(userChoice >= 1 && userChoice <= premadePackages.size()) {
 				
 				//I'm using -1 because when I'm displaying the pre-made packages, I put (i+1) since Lists start from 0 index. if user inputs 2, that choice refers to package at index 1 in the premadePackages List 
@@ -101,13 +104,13 @@ public class App {
 			} 
 			
 			
-			//Confirm and Display details of user's booking details
+			
+			////display to user the selected package,
 			System.out.println("\nYou have selected: \n");
-			System.out.println(selected); //display the selected package,
-			System.out.println("\nComplete the step below to complete your boooking. \n");
+			System.out.println(selected); 
+			System.out.println("\nComplete the step below to finalize your boooking. \n"); //prompt user to continue adding input to complete their booking
 			
 			//Ask number of people booking the package and offer discounted cost if more than 1
-			
 			System.out.println("\n----  DISCOUNT ON GROUP BOOKINGS!!! Every extra person gets 10% discount! ----------");
 			System.out.println("Please note: packages have a maximum limit of 10 people.");
 			System.out.print("\nHow many people are booking this Safari?: ");
@@ -136,31 +139,31 @@ public class App {
 			//calculate cost depending on number of people
 			double packageCost = PackageCost.calculatePackageCost(numOfPeople, selected.getPackageCost());
 			
+			//Add user's booked package to the hash map
+			bookedPackages.put(selected.getId(), selected);
 			
 			
-			//TODO custom exception to handle user putting invalid input or wrong no. of people
+			//Clean display to show user the details of the SafariPakage they have booked
 			String separator = "\n==========================================================\n";
 
 			if (numOfPeople == 1) {
-			    // Print Separator ABOVE the message
 			    System.out.println(separator);
-			    System.out.println("\n	Thank you!! Your package booking has successfully completed. Below are the details:");
-			    System.out.printf("		You have paid: $%.2f for 1 person%n", packageCost);
-			    System.out.printf("		Package booked is: " + selected + "\n");
-			    // Print Separator BELOW the details
+			    System.out.println(" Thank you!! Your package booking has successfully completed. Below are the details:");
+			    System.out.printf("   Booking ID: %d%n", selected.getId());
+			    System.out.printf("   You have paid: $%.2f for 1 person%n", packageCost);
+			    System.out.printf("   Package booked is: %s%n", selected);
 			    System.out.println(separator);
 			} else {
-			    // Note: 'selected' must be an object with a getPackageCost() method
 			    double savings = numOfPeople * selected.getPackageCost() - packageCost;
-			    // Print Separator ABOVE the message
 			    System.out.println(separator);
-			    System.out.println("	Thank you!! Your package booking has successfully completed. Below are the details:");
-			    System.out.printf("		You have paid: $%.2f for %d people %n", packageCost, numOfPeople);
-			    System.out.printf("		You have saved: $%.2f.%n", savings);
-			    System.out.printf("		Package booked is: " + selected + "\n"); // Changed %n to \n for consistency
-			    // Print Separator BELOW the details
+			    System.out.println(" Thank you!! Your package booking has successfully completed. Below are the details:");
+			    System.out.printf("   Booking ID: %d%n", selected.getId());
+			    System.out.printf("   You have paid: $%.2f for %d people%n", packageCost, numOfPeople);
+			    System.out.printf("   You have saved: $%.2f%n", savings);
+			    System.out.printf("   Package booked is: %s%n", selected);
 			    System.out.println(separator);
 			}
+
 			
 
 			
